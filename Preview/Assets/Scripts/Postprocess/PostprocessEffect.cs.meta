@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0c608ee10fa424946a69dbcc7a1a27ad
+timeCreated: 1518539016
+licenseType: Store
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - lutTexture: {instanceID: 0}
+  - lutShader: {fileID: 4800000, guid: 11b11a866b5bb7446ad32fc3ea380de2, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

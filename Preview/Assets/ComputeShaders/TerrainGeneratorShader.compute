@@ -1,0 +1,117 @@
+﻿#pragma kernel CSMain
+
+//INPUT
+float xOffset;
+float yOffset;
+float density;
+int terrainTextureWidth;
+float bottomClamping;
+float bottomStretch;
+float topStretch;
+
+//OUTPUT
+RWTexture2D<float4> terrainHeightMapTex;
+RWStructuredBuffer<float> terrainHeightMap;
+
+int hash(int val)
+{
+	const int seed = 100;
+    val = (val ^ 61) ^ (val >> 16);
+    val = val + (val << 3);
+    val = val ^ (val >> 4);
+    val = val * seed;
+    val = val ^ (val >> 15);
+    return val;
+}
+
+float2 grad( int hash)
+{
+	const float2 perms[8] = 
+	{
+		{ -1.0f, -1.0f }, { 1.0f, 0.0f }, { -1.0f, 0.0f }, { 1.0f, 1.0f },
+		{ -1.0f, 1.0f }, { 0.0f, -1.0f }, { 0.0f, 1.0f }, { 1.0f, -1.0f }
+	};
+    return perms[hash & 7];
+}
+
+//Based on Perlin's Simplex Noise
+float simplexNoise(float x, float y) 
+{
+	float2 xy = float2(x, y);
+    float n0, n1, n2;
+    float2 g0, g1, g2;
+
+    float s = ( x + y ) * 0.366025403f;
+    float2 a = xy + s;
+    int2 ij = floor( a );
+
+    float t = ( float ) ( ij.x + ij.y ) * 0.211324865f;
+    float2 b = ij - t;
+    float2 c = xy - b;
+
+    float2 ij1 = c.x > c.y ? float2(1,0) : float2(0,1);
+
+	float2 c1 = c - ij1 + 0.211324865f;
+	float2 c2 = c - 1.0f + 2.0f * 0.211324865f;
+
+    int ii = ij.x & 0xff;
+    int jj = ij.y & 0xff;
+
+    float t0 = 0.5f - c.x * c.x - c.y * c.y;
+    float t20, t40;
+	if(t0 < 0.0f)
+	{
+		t40 = t20 = t0 = n0 = g0.x = g0.y = 0.0f;
+	}
+    else 
+    {
+		g0 = grad(hash( ii + hash(jj) ));
+		t20 = t0 * t0;
+		t40 = t20 * t20;
+		n0 = t40 * ( g0.x * c.x + g0.y * c.y );
+    }
+
+    float t1 = 0.5f - c1.x * c1.x - c1.y * c1.y;
+    float t21, t41;
+	if(t1 < 0.0f)
+	{
+		t21 = t41 = t1 = n1 = g1.x = g1.y = 0.0f;
+	}
+    else 
+    {
+      g1 = grad(hash(ii + ij1.x + hash(jj + ij1.y)));
+      t21 = t1 * t1;
+      t41 = t21 * t21;
+      n1 = t41 * ( g1.x * c1.x + g1.y * c1.y );
+    }
+
+    float t2 = 0.5f - c2.x * c2.x - c2.y * c2.y;
+    float t22, t42;
+	if(t2 < 0.0f)
+	{
+		t42 = t22 = t2 = n2 = g2.x = g2.y = 0.0f;
+	}
+    else 
+    {
+      g2 = grad(hash( ii + 1 + hash(jj + 1) ));
+      t22 = t2 * t2;
+      t42 = t22 * t22;
+      n2 = t42 * ( g2.x * c2.x + g2.y * c2.y );
+    }
+
+    float noise = 40.0f * ( n0 + n1 + n2 );
+    return noise;
+}
+
+[numthreads(32,32,1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	float height = simplexNoise(id.x * density + xOffset, id.y * density + yOffset) * 0.5f + 0.5f;
+	height = saturate((height - bottomStretch) / (topStretch - bottomStretch));
+	if(height < bottomClamping)
+	{
+		height = bottomClamping;
+	}
+	terrainHeightMapTex[id.xy] = float4(height, height, height, 1.0);
+	terrainHeightMap[id.x + id.y * terrainTextureWidth] = height;
+}
