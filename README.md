@@ -18,6 +18,6 @@ Unity version: 2018.2 (project should work on onther 2018.x and after small chan
 * GUI mapped on terrain with deffered decals
  
 ## External assets (for models and textures):
-* Star Sparrow ship: https://goo.gl/uvDBuR
+* Star Sparrow: https://goo.gl/uvDBuR
 * Mountain Rocks: https://goo.gl/mJn1HA
 * Unity Particles and Post Process Stack (for DoF and SSAO)
