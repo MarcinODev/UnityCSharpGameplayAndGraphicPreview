@@ -1,6 +1,6 @@
 # Unity C#, Gameplay and Graphic Programmer skills preview
 Preview of skills in gameplay and graphic programming in Unity.
-Unity version: 2018.2 (project should work on onther 2018.x and after small change also on 2017.x).
+Unity version: 2018.2 (project should work on other 2018.x and after small change also on 2017.x versions).
 
 ## Main Features
 #### Gameplay
