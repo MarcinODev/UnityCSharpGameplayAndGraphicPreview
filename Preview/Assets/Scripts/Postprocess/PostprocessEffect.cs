@@ -19,6 +19,7 @@ public class PostprocessEffect : MonoBehaviour
 		if(Application.isPlaying && copyMaterialInstance)
 		{
 			material = Instantiate(material);//copy to make it unchangeable for repository
+			material.name += gameObject.name;
 		}
 	}
 

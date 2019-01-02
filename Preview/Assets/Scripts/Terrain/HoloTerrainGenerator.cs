@@ -34,13 +34,7 @@ public class HoloTerrainGenerator : MonoBehaviour
 	protected void Awake()
 	{
 		Trans = transform;
-		Initialize();
 	}
-	
-	/*protected void Update()
-	{
-		Refresh(Time.time, Time.time);
-	}*/
 
 	protected void OnDestroy()
 	{
@@ -57,6 +51,7 @@ public class HoloTerrainGenerator : MonoBehaviour
 
 	public void Initialize()
 	{
+		Trans = transform;
 		InitializeComputations();
 		InitializeRenderer();
 	}

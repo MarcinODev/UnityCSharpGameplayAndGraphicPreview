@@ -8,6 +8,7 @@
 		_NormalsFromUI("_NormalsFromUI", Float) = 0
 		_BumpingNormalsByUI("_BumpingNormalsByUI", Float) = 1
 		_VisibilityByNormalDetolerance("_VisibilityByNormalDetolerance (the bigger the less normals will accept)", Float) = 0.1
+		_NormalsToUI("_NormalsToUI", Float) = 0.001
 	}
 	SubShader
 	{
@@ -30,6 +31,7 @@
 			float _NormalsFromUI;
 			float _BumpingNormalsByUI;
 			float _VisibilityByNormalDetolerance;
+			float _NormalsToUI;
 
 			sampler2D _GBufferNormals;
 			sampler2D_float _CameraDepthTexture;
@@ -76,7 +78,7 @@
 				half3 wNorm = normal.rgb * 2.0 - 1.0;
 				clip(dot(wNorm, input.orientation) - _VisibilityByNormalDetolerance);
 
-				float4 col = tex2D(_MainTex, uv);
+				float4 col = tex2D(_MainTex, uv + wNorm.xz * _NormalsToUI);
 				clip(col.a - 0.01);
 
 				outDiffuse = col * _Color;

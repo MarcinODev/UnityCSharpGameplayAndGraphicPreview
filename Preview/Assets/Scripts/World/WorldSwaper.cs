@@ -34,16 +34,17 @@ public class WorldSwaper : MonoBehaviour
 		fadeRealWorldEffect.enabled = false;
 
 		realWorldRoot.SetActive(false);
-
-		fadeHoloWorldEffect.enabled = true;
-		holoWorldRoot.SetActive(true);
 		
-		fadeHoloWorldEffect.SetProgressOverTime(0f, fadeInTime, 1f);
-
 		if(onFadeOut != null)
 		{
 			onFadeOut();
 		}
+
+		yield return new WaitForEndOfFrame();//wait to refresh unity renderings
+
+		fadeHoloWorldEffect.enabled = true;
+		holoWorldRoot.SetActive(true);
+		fadeHoloWorldEffect.SetProgressOverTime(0f, fadeInTime, 1f);
 
 		yield return new WaitForSeconds(fadeInTime);
 		fadeHoloWorldEffect.enabled = false;
@@ -60,16 +61,17 @@ public class WorldSwaper : MonoBehaviour
 		fadeHoloWorldEffect.enabled = false;
 
 		holoWorldRoot.SetActive(false);
-
-		fadeRealWorldEffect.enabled = true;
-		realWorldRoot.SetActive(true);
 		
-		fadeRealWorldEffect.SetProgressOverTime(0f, fadeInTime, 1f);
-
 		if(onFadeOut != null)
 		{
 			onFadeOut();
 		}
+
+		yield return new WaitForEndOfFrame();//wait to refresh unity renderings
+
+		fadeRealWorldEffect.enabled = true;
+		realWorldRoot.SetActive(true);
+		fadeRealWorldEffect.SetProgressOverTime(0f, fadeInTime, 1f);
 
 		yield return new WaitForSeconds(fadeInTime);
 		fadeRealWorldEffect.enabled = false;

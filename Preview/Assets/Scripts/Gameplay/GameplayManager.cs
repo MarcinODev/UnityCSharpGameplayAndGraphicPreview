@@ -51,6 +51,8 @@ public class GameplayManager : MonoBehaviour
 	/// </summary>
 	public void PreStartGame()
 	{
+		terrainController.OnPreStartGame();
+
 		float xPos = mapConfig.mapWorldBoundings.center.x;
 		float yPos = mapConfig.maxFlyHeight * 0.5f + terrainGenerator.BottomTerrainY;
 		float zPos = mapConfig.mapWorldBoundings.yMin + spawnShipBorderOffset;
@@ -60,8 +62,6 @@ public class GameplayManager : MonoBehaviour
 		ShipEntity.onDeath += OnShipDie;
 		shipInput.AssignShip(ShipEntity);
 		cameraShipFollower.SetTargetToFollow(ShipEntity);
-
-		terrainController.OnPreStartGame();
 	}
 
 	/// <summary>

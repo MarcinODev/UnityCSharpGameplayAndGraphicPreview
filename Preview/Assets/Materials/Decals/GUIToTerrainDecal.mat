@@ -66,13 +66,14 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _NormalsFromUI: 0.23
+    - _NormalsToUI: 0.002
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _VisibilityByNormalDetolerance: 23.28
+    - _VisibilityByNormalDetolerance: 30
     - _VisibilityByNormalTolerance: 0.9
     - _ZWrite: 1
     m_Colors:

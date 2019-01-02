@@ -25,6 +25,7 @@ public class TerrainController
 	/// </summary>
 	public void OnPreStartGame()
 	{
+		terrainGenerator.Initialize();
 		terrainGenerator.Refresh(0f, terrainYOffset);
 		terrainGenerator.SetHeightFactorToTerrainMaterial(0f);
 	}
