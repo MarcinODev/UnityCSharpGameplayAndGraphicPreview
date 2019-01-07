@@ -9,7 +9,7 @@ public enum SavedDataType
 }
 
 /// <summary>
-/// DataSaveController supports simple save process.
+/// Supports simple save process.
 /// </summary>
 public static class DataSaveController
 {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Class which follows ship target on FixedUpdates (to match physics updates)
+/// Supports camera movement to follow its ship target
 /// </summary>
 public class CameraShipFollower : CameraFollower
 {

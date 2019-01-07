@@ -5,7 +5,7 @@ Unity version: 2018.2 (project should work on other 2018.x and after small chang
 ## Main Features
 #### Gameplay
 * Spaceship gameplay: avoid hitting terrain and explosive bombs
-* Hardness level growing with design-setup curve 
+* Difficulty level growing with design-setup curve 
 * Effects pool mechanims
 * Camera management, objects follow, shakes, etc.
 * Entity factory system with pool mechanic

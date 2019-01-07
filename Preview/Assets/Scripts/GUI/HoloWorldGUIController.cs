@@ -16,6 +16,8 @@ public class HoloWorldGUIController : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI scoreAndLifeText;
 	[SerializeField] private Button goToMainMenuButton;
 	[SerializeField] private GameObject youDieMessage;
+	[SerializeField] private float quickInfoMessageDisableTime = 5f;
+	[SerializeField] private GameObject quickInfoMessage;
 
 	#region UnityMethods
 	protected void Start()
@@ -45,7 +47,9 @@ public class HoloWorldGUIController : MonoBehaviour
 	private void OnGameStart()
 	{
 		scoreAndLifeText.gameObject.SetActive(true);
+		quickInfoMessage.SetActive(true);
 		StartCoroutine(UpdateScoreCoroutine());
+		StartCoroutine(DisableQuickInfoMessageAfterTime(quickInfoMessageDisableTime));
 	}
 
 	private void OnGameFinish()
@@ -54,6 +58,12 @@ public class HoloWorldGUIController : MonoBehaviour
 		goToMainMenuButton.gameObject.SetActive(true);
 		youDieMessage.SetActive(true);
 		UpdateScore();
+	}
+
+	private IEnumerator DisableQuickInfoMessageAfterTime(float quickInfoMessageDisableTime)
+	{
+		yield return new WaitForSeconds(quickInfoMessageDisableTime);
+		quickInfoMessage.SetActive(false);
 	}
 
 	private IEnumerator UpdateScoreCoroutine()

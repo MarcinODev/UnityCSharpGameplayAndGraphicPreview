@@ -18,11 +18,13 @@ public class WorldSwaper : MonoBehaviour
 	
 	public void SwapRealToHoloWorld(Action onFinish, Action onFadeOut)
 	{
+		StopAllCoroutines();
 		StartCoroutine(SwapRealToHoloWorldCoroutine(onFinish, onFadeOut));
 	}
 
 	public void SwapHoloToRealWorld(Action onFinish, Action onFadeOut)
 	{
+		StopAllCoroutines();
 		StartCoroutine(SwapHoloToRealWorldCoroutine(onFinish, onFadeOut));
 	}
 

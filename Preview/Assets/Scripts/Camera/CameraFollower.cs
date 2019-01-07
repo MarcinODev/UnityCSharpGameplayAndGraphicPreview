@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Class which follows target on FixedUpdates (to match physics updates)
+/// Supports camera movement to follow its target
 /// </summary>
 public class CameraFollower : MonoBehaviour
 {

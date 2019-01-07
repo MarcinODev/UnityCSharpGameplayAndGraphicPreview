@@ -66,7 +66,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.231
     - _GlossyReflections: 1
-    - _HeightFactor: 14.480141
+    - _HeightFactor: 8.752422
     - _HeightToColorPow: 14.9
     - _InvFade: 0.84
     - _Metallic: 0.033
@@ -85,6 +85,7 @@ Material:
     m_Colors:
     - _Color: {r: 0.05660379, g: 0.05660379, b: 0.05660379, a: 1}
     - _EmissionColor: {r: 0, g: 0.40268168, b: 0.706, a: 1}
+    - _EmissionColorOnDanger: {r: 1.1266814, g: 0.02099093, b: 0, a: 1}
     - _EmissionColorOnShipClose: {r: 1, g: 0.06511322, b: 0, a: 1}
     - _HeightMapParams: {r: 1253.8127, g: -377.8459, b: 36.48, a: 41.39}
     - _ShipPosition: {r: 273.95523, g: 41, b: -372.4, a: 0}

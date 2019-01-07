@@ -4,6 +4,7 @@
 	{
 		[HDR]_Color("_Color", Color) = (1,1,1,1)
 		[HDR]_EmissionColor("_EmissionColor", Color) = (1,1,1,1)
+		[HDR]_EmissionColorOnDanger("_EmissionColorOnDanger", Color) = (1,1,1,1)
 		_RandomMaxColorStep("_RandomMaxColorStep", Range(0, 1)) = 0.7
 
 		_HeightToColorPow("_HeightToColorPow", Float) = 2
@@ -36,6 +37,7 @@
 
 			float _HeightFactor;
 			float4 _EmissionColor;//HDR
+			float4 _EmissionColorOnDanger;//HDR
 			float4 _Color;//HDR
 			float _RandomMaxColorStep;
 			float _HeightToColorPow;
@@ -132,12 +134,12 @@
 				addQuad(wp0Down, wp0, wp2Down, wp2, heightMap, input[0].color, outStream);
 			}
 
-			void frag( VertToFrag input,
-							out half4 outGBuffer0 : SV_Target0,//diffuse, occlusion
-							out half4 outGBuffer1 : SV_Target1,//spec(rgb), roughtness
-							out half4 outGBuffer2 : SV_Target2,//wNormal, a- unused
-							out half4 outGBuffer3 : SV_Target3//emission
-						  )
+			void frag(  VertToFrag input,
+						out half4 outGBuffer0 : SV_Target0,//diffuse, occlusion
+						out half4 outGBuffer1 : SV_Target1,//spec(rgb), roughtness
+						out half4 outGBuffer2 : SV_Target2,//wNormal, a- unused
+						out half4 outGBuffer3 : SV_Target3//emission
+					 )
 			{
 				float colorIntensityFactor = pow(saturate(input.heightMap * 2), _HeightToColorPow) * lerp(1, _RandomMaxColorStep, input.vertCol.g);
 
@@ -149,7 +151,8 @@
 				data.normalWorld = input.worldNorm;
 				UnityStandardDataToGbuffer(data, outGBuffer0, outGBuffer1, outGBuffer2);
 
-				half3 emissionColor = _EmissionColor.rgb * colorIntensityFactor;
+				half isShipOverTerrain = pow(saturate(_Global_ShipPosition.y - input.worldPos.y), 4);
+				half3 emissionColor = (_EmissionColor.rgb * isShipOverTerrain + _EmissionColorOnDanger * (1 - isShipOverTerrain)) * colorIntensityFactor;
 				float distToShip = length(input.worldPos - _Global_ShipPosition);// +lerp(0, _RandomMaxColorStep, input.vertCol.g);//this is for pixelisation the radius but smoth looked better
 				float emissionLerp = saturate(saturate(1 - distToShip / _ShipDistanceTolerance) * _ShipCloseIntensity);
 				emissionColor = lerp(emissionColor, _EmissionColorOnShipClose, emissionLerp);

@@ -39,6 +39,8 @@ public class EntityEffectEmmiter : MonoBehaviour
 		PoolManager.AllocInPool(onSpawnEffect);
 		PoolManager.AllocInPool(onDeathEffect);
 		PoolManager.AllocInPool(onCollideEffect);
+
+		OnPositionChanged(entity, entity.Position, entity.Position);
 	}
 	#endregion
 

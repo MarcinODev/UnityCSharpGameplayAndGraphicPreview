@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Simple bombs spawning mechanism which spawns bombs dependently on current game hardness
+/// Simple bombs spawning mechanism which spawns bombs dependently on current game difficulty
 /// </summary>
 public class BombSpawner
 {
@@ -19,12 +19,12 @@ public class BombSpawner
 	}
 
 	/// <summary>
-	/// Spawns bomb basing on game time and current hardness
+	/// Spawns bomb basing on game time and current difficulty
 	/// </summary>
 	public void Update(float gameTime)
 	{
-		float hardness = mapConfig.GetHardness(gameTime);
-		float spawnInterval = Mathf.Lerp(mapConfig.maxBombSpawnInterval, mapConfig.minBombSpawnInterval, hardness);
+		float difficulty = mapConfig.GetDifficulty(gameTime);
+		float spawnInterval = Mathf.Lerp(mapConfig.maxBombSpawnInterval, mapConfig.minBombSpawnInterval, difficulty);
 		if(lastSpawnTime + spawnInterval > gameTime || gameplayManager.ShipEntity == null || gameplayManager.ShipEntity.IsDead)
 		{
 			return;

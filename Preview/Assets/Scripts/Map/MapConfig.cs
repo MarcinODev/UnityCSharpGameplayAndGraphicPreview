@@ -18,8 +18,8 @@ public class MapConfig : MonoBehaviour
 	public float chanceBombSpawnYSameAsShip = 0.5f;
 	public float chanceBombSpawnXSameAsShip = 0.2f;
 	public float maxTerrainHeightFactor = 1f;
-	public AnimationCurve hardnessCurve;
-	public float timeToMaxHardnessCurve = 60f;
+	public AnimationCurve difficultyCurve;
+	public float timeToMaxDifficultyCurve = 60f;
 
 	#region UnityMethods
 	protected void Awake()
@@ -38,29 +38,29 @@ public class MapConfig : MonoBehaviour
 	#endregion
 
 	/// <summary>
-	/// Gets hardness of gameplay in certain moment of gameTime. Values are in range [0,1]
+	/// Gets difficulty of gameplay in certain moment of gameTime. Values are in range [0,1]
 	/// </summary>
-	public float GetHardness(float gameTime)
+	public float GetDifficulty(float gameTime)
 	{
 		if(gameTime == 0f)
 		{
 			return 0f;
 		}
 
-		if(gameTime > timeToMaxHardnessCurve)
+		if(gameTime > timeToMaxDifficultyCurve)
 		{
-			gameTime = timeToMaxHardnessCurve;
+			gameTime = timeToMaxDifficultyCurve;
 		}
 
-		return hardnessCurve.Evaluate(gameTime / timeToMaxHardnessCurve);
+		return difficultyCurve.Evaluate(gameTime / timeToMaxDifficultyCurve);
 	}
 
 	/// <summary>
-	/// Gets fly height limit based on hardness which bases on gameTime
+	/// Gets fly height limit based on difficulty which bases on gameTime
 	/// </summary>
 	public float GetFlyHeightLimit(float gameTime)
 	{
-		float flyLimit = Mathf.Lerp(minFlyHeight, maxFlyHeight, GetHardness(gameTime));
+		float flyLimit = Mathf.Lerp(minFlyHeight, maxFlyHeight, GetDifficulty(gameTime));
 		return flyLimit;
 	}
 

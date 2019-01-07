@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Controlls Holo terrain view and generation parameters dependingly of current game hardness level
+/// Controlls Holo terrain view and generation parameters dependingly of current game difficulty level
 /// </summary>
 public class TerrainController
 {
@@ -32,12 +32,12 @@ public class TerrainController
 
 	public void Update(float gameTime, float deltaTime)
 	{
-		float hardness = mapConfig.GetHardness(gameTime);
+		float difficulty = mapConfig.GetDifficulty(gameTime);
 
-		CurrentHeightFactor = hardness * mapConfig.maxTerrainHeightFactor;
+		CurrentHeightFactor = difficulty * mapConfig.maxTerrainHeightFactor;
 		terrainGenerator.SetHeightFactorToTerrainMaterial(CurrentHeightFactor);
 
-		CurrentScrollSpeed = Mathf.Lerp(mapConfig.minMapScrollSpeed, mapConfig.maxMapScrollSpeed, hardness);
+		CurrentScrollSpeed = Mathf.Lerp(mapConfig.minMapScrollSpeed, mapConfig.maxMapScrollSpeed, difficulty);
 		terrainYOffset += CurrentScrollSpeed * deltaTime;
 		terrainGenerator.Refresh(0f, terrainYOffset);
 	}
